@@ -2,19 +2,18 @@ package coffeemachine;
 import coffeemachine.enums.EnumDrink;
 
 public class Drink {
-	EnumDrink drinkType;
-	String messageToDisplay;
-	Integer sugerNumber = 0;
-	boolean hasStick = false;
+	private EnumDrink drinkType;
+	private String messageToDisplay;
+	private Integer sugerNumber = 0;
+	private boolean hasStick = false;
+	private boolean isDrinkHot = false;
 	
 	public Drink(final String message) throws Exception {
 		drinkType = EnumDrink.M;
 		messageToDisplay = message;
 	}
 	
-	
-	
-	public Drink(EnumDrink drinkType, Integer sugarNumber, Boolean hasStick) {
+	public Drink(EnumDrink drinkType, Integer sugarNumber, Boolean hasStick, Boolean isDrinkHot) {
 		this.drinkType = drinkType;
 		if (sugarNumber != null) {
 			this.sugerNumber = sugarNumber;
@@ -22,9 +21,10 @@ public class Drink {
 		if (hasStick != null) {
 			this.hasStick = hasStick;
 		}
+		if (isDrinkHot != null) {
+			this.isDrinkHot = isDrinkHot;
+		}
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -33,6 +33,9 @@ public class Drink {
 		} else {
 			StringBuilder sb = new StringBuilder();
 			sb.append("Drink maker makes 1 ");
+			if (isDrinkHot) {
+				sb.append("extra hot ");
+			}
 			sb.append(drinkType.getName());
 			sb.append(" with ");
 			if (sugerNumber == 0) {
