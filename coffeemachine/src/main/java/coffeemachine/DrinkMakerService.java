@@ -8,12 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 import coffeemachine.enums.EnumDrink;
+import coffeemachine.services.BeverageQuantityChecker;
+import coffeemachine.services.EmailNotifier;
+import coffeemachine.services.impl.BeverageQuantityCheckerImpl;
+import coffeemachine.services.impl.EmailNotifierImpl;
 
 public class DrinkMakerService {
 	
-	public static List<SoldDrinkEntity> soldDrinks = new ArrayList<>();
+	BeverageQuantityChecker bqc = new BeverageQuantityCheckerImpl();
+	EmailNotifier en = new EmailNotifierImpl();
 	
-	public static Drink buyYouADrink(final String message, Float moneyGiven) throws Exception {
+	public static final String SHORTAGE_MESSAGE = "Your drink cannot be delivered because of a "
+			+ "shortage. A notification has been sent;";
+	
+	public List<SoldDrinkEntity> soldDrinks = new ArrayList<>();
+	
+	public Drink buyYouADrink(final String message, Float moneyGiven) throws Exception {
 		if (message == null || message.isEmpty()) {
 			throw new Exception("message null or empty");
 		}
@@ -35,6 +45,10 @@ public class DrinkMakerService {
 		if (splittedMessage.length == 2 && drinkType == EnumDrink.M) {
 			return new Drink(splittedMessage[1]);
 		} else if (splittedMessage.length == 3 && drinkType != EnumDrink.M) {
+			if (bqc.isEmpty(drinkType.getName())) {
+				en.notifyMissingDrink(drinkType.getName()); 
+				return new Drink(SHORTAGE_MESSAGE);
+			}
 			if (moneyGiven == null || moneyGiven < drinkType.getPrice()) {
 				return new Drink("not enough money given");
 			}
@@ -59,7 +73,7 @@ public class DrinkMakerService {
 		}
 	}
 	
-	public static String generateReport() {
+	public String generateReport() {
 		final StringBuilder sb = new StringBuilder();
 		final Map<EnumDrink, Integer> drinksSold = new HashMap<>();
 		Double moneyEarned = 0d;

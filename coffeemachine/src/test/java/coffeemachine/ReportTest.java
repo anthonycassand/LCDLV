@@ -25,15 +25,17 @@ public class ReportTest {
 		put(ORANGE_MESSAGE, ORANGE_NUMBER);
 	}};
 	
+	DrinkMakerService dms = new DrinkMakerService();
+	
 	@Test
 	public void buyDrinksThenGenerateAReportTest() throws Exception {
 		for (String message : drinksToGenerate.keySet()) {
 			for (int i=0 ; i<drinksToGenerate.get(message) ; i++) {
-				DrinkMakerService.buyYouADrink(message, 1.f);
+				dms.buyYouADrink(message, 1.f);
 			}
 		}
 		
-		String actualReport = DrinkMakerService.generateReport();
+		String actualReport = dms.generateReport();
 		
 		Assertions.assertTrue(actualReport.contains("tea sold : " + TEA_NUMBER));
 		Assertions.assertTrue(actualReport.contains("chocolate sold : " + CHOCOLATE_NUMBER));
