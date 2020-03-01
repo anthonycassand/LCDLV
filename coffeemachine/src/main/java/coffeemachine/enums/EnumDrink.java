@@ -1,13 +1,15 @@
 package coffeemachine.enums;
 
 public enum EnumDrink {
-	T("tea"),
-	H("chocolate"),
-	C("coffee"),
-	M("message");
+	T("tea", 0.4f),
+	H("chocolate", 0.5f),
+	C("coffee", 0.5f),
+	M("message", null);
 	private String drink;
-	private EnumDrink(String s) {
+	private Float price;
+	private EnumDrink(String s, Float d) {
 		this.drink = s;
+		this.price = d;
 	}
 	public static EnumDrink getValueOf(final String s) {
 		for (EnumDrink element : EnumDrink.values()) {
@@ -19,5 +21,8 @@ public enum EnumDrink {
 	}
 	public String getName() {
 		return drink;
+	}
+	public Float getPrice() {
+		return price;
 	}
 }

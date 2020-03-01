@@ -8,39 +8,24 @@ public class Drink {
 	boolean hasStick = false;
 	
 	public Drink(final String message) throws Exception {
-		if (message == null || message.isEmpty()) {
-			throw new Exception("message null or empty");
-		}
-		String[] splittedMessage = message.split(":", -1);
-		drinkType = EnumDrink.getValueOf(splittedMessage[0]);
-		if (drinkType == null) {
-			throw new Exception("unkown order type");
-		}
-		if (splittedMessage.length == 2) {
-			if (drinkType == EnumDrink.M) {
-				messageToDisplay = splittedMessage[1];
-			} else {
-				throw new Exception("incorrect message length");
-			}
-		} else if (splittedMessage.length == 3) {
-			if (splittedMessage[1] != null && !splittedMessage[1].equals("")) {
-				Integer i = Integer.parseInt(splittedMessage[1]);
-				if (i != null && i < 0) {
-					throw new Exception("incorrect number of sugar");
-				} else if (i != null && i >= 0) {
-					sugerNumber = i;
-				}
-				if (splittedMessage[2] != null && !splittedMessage[2].isEmpty()) {
-					Integer hasStick = Integer.parseInt(splittedMessage[2]);
-					this.hasStick = hasStick == 0;
-				}
-			}
-		} else {
-			throw new Exception("wrong message length");
-		}
-		
+		drinkType = EnumDrink.M;
+		messageToDisplay = message;
 	}
 	
+	
+	
+	public Drink(EnumDrink drinkType, Integer sugarNumber, Boolean hasStick) {
+		this.drinkType = drinkType;
+		if (sugarNumber != null) {
+			this.sugerNumber = sugarNumber;
+		}
+		if (hasStick != null) {
+			this.hasStick = hasStick;
+		}
+	}
+
+
+
 	@Override
 	public String toString() {
 		if (drinkType == EnumDrink.M) {
