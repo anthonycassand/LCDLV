@@ -1,8 +1,17 @@
 package coffeemachine;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import coffeemachine.enums.EnumDrink;
 
 public class DrinkMakerService {
+	
+	public static List<SoldDrinkEntity> soldDrinks = new ArrayList<>();
 	
 	public static Drink buyYouADrink(final String message, Float moneyGiven) throws Exception {
 		if (message == null || message.isEmpty()) {
@@ -42,9 +51,40 @@ public class DrinkMakerService {
 			if (splittedMessage[2] != null && !splittedMessage[2].isEmpty()) {
 				hasStick = (Integer.parseInt(splittedMessage[2]) == 0);
 			}
-			return new Drink(drinkType, sugarNumber, hasStick, isDrinkHot);
+			Drink d = new Drink(drinkType, sugarNumber, hasStick, isDrinkHot);
+			soldDrinks.add(new SoldDrinkEntity(d, new Date()));
+			return d;
 		} else {
 			throw new Exception("wrong message length");
 		}
+	}
+	
+	public static String generateReport() {
+		final StringBuilder sb = new StringBuilder();
+		final Map<EnumDrink, Integer> drinksSold = new HashMap<>();
+		Double moneyEarned = 0d;
+		
+		for (final SoldDrinkEntity sde : soldDrinks) {
+			final EnumDrink type = sde.getType();
+			if (! drinksSold.containsKey(type)) {
+				drinksSold.put(type, 1);
+			} else {
+				drinksSold.put(type, drinksSold.get(type)+1);
+			}
+			moneyEarned+= type.getPrice();
+		}
+		
+		for (EnumDrink drinkType : drinksSold.keySet()) {
+			sb.append(drinkType.getName());
+			sb.append(" sold : ");
+			sb.append(drinksSold.get(drinkType));
+			sb.append("\n");
+		}
+		sb.append("total amount of money earned : ");
+		DecimalFormat df = new java.text.DecimalFormat("0.##");
+		df.setMinimumFractionDigits(2);
+		sb.append(df.format(moneyEarned));
+		sb.append(" euros");
+		return sb.toString();
 	}
 }

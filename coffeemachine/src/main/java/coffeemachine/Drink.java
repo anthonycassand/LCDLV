@@ -4,9 +4,17 @@ import coffeemachine.enums.EnumDrink;
 public class Drink {
 	private EnumDrink drinkType;
 	private String messageToDisplay;
-	private Integer sugerNumber = 0;
+	private Integer sugarNumber = 0;
 	private boolean hasStick = false;
 	private boolean isDrinkHot = false;
+	
+	public Drink(Drink d) {
+		drinkType = d.drinkType;
+		messageToDisplay = d.messageToDisplay;
+		sugarNumber = d.sugarNumber;
+		hasStick = d.hasStick;
+		isDrinkHot = d.isDrinkHot;
+	}
 	
 	public Drink(final String message) throws Exception {
 		drinkType = EnumDrink.M;
@@ -16,7 +24,7 @@ public class Drink {
 	public Drink(EnumDrink drinkType, Integer sugarNumber, Boolean hasStick, Boolean isDrinkHot) {
 		this.drinkType = drinkType;
 		if (sugarNumber != null) {
-			this.sugerNumber = sugarNumber;
+			this.sugarNumber = sugarNumber;
 		}
 		if (hasStick != null) {
 			this.hasStick = hasStick;
@@ -38,13 +46,13 @@ public class Drink {
 			}
 			sb.append(drinkType.getName());
 			sb.append(" with ");
-			if (sugerNumber == 0) {
+			if (sugarNumber == 0) {
 				sb.append("no");
 			} else {
-				sb.append(sugerNumber);
+				sb.append(sugarNumber);
 			}
 			sb.append(" sugar");
-			if (sugerNumber>1) {
+			if (sugarNumber>1) {
 				sb.append("s");
 			}
 			if (hasStick) {
@@ -54,5 +62,9 @@ public class Drink {
 			}
 			return sb.toString();
 		}
+	}
+	
+	public EnumDrink getType() {
+		return drinkType;
 	}
 }
