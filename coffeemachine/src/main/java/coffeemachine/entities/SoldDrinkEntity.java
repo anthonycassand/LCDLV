@@ -1,4 +1,4 @@
-package coffeemachine;
+package coffeemachine.entities;
 
 import java.util.Date;
 

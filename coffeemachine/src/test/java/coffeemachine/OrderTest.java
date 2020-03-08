@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import coffeemachine.entities.Drink;
 import coffeemachine.enums.EnumDrink;
+import coffeemachine.services.DrinkMakerService;
 
 
 public class OrderTest {

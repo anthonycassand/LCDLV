@@ -8,7 +8,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import coffeemachine.entities.Drink;
 import coffeemachine.services.BeverageQuantityChecker;
+import coffeemachine.services.DrinkMakerService;
 
 public class ShortageTest {
 

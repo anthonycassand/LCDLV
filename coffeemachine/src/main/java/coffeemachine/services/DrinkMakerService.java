@@ -1,4 +1,4 @@
-package coffeemachine;
+package coffeemachine.services;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import coffeemachine.entities.Drink;
+import coffeemachine.entities.SoldDrinkEntity;
 import coffeemachine.enums.EnumDrink;
-import coffeemachine.services.BeverageQuantityChecker;
-import coffeemachine.services.EmailNotifier;
 import coffeemachine.services.impl.BeverageQuantityCheckerImpl;
 import coffeemachine.services.impl.EmailNotifierImpl;
 

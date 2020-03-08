@@ -6,6 +6,8 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import coffeemachine.services.DrinkMakerService;
+
 public class ReportTest {
 
 	private static final String TEA_MESSAGE = "T::";
